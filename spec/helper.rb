@@ -1,0 +1,2 @@
+require 'merlin'
+require 'rspec'

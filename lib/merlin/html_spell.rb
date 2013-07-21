@@ -1,5 +1,3 @@
-require 'merlin'
-
 module Merlin class HtmlSpell < Spell
   def initialize(*args)
     super

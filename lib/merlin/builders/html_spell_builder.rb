@@ -1,4 +1,3 @@
-require 'merlin'
 require 'cgi'
 
 module Merlin module Builders class HtmlSpellBuilder < SpellBuilder

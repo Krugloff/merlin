@@ -1,5 +1,3 @@
-require 'merlin'
-
 # Все внутренние переменные экземпляра лучше начинать с подчеркивания, чтобы они не переопределялись с переменными, переданными в шаблон.
 module Merlin module Builders class SpellBuilder
   include Merlin::Spellbooks::BaseSpellbook

@@ -6,7 +6,7 @@ module Merlin module Builders class HtmlSpellBuilder < SpellBuilder
 
   attr_accessor :_tags
 
-  def initialize(context = nil)
+  def initialize(*args)
     super
     @_tags = []
   end

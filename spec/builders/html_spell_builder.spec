@@ -1,24 +1,24 @@
 require_relative '../helper'
 
 describe Merlin::Builders::HtmlSpellBuilder do
-  SpellBuilder = Merlin::Builders::HtmlSpellBuilder
+  let(:spell_builder) { Merlin::Builders::HtmlSpellBuilder }
 
   context 'when render content' do
     it 'does not save tags' do
-      ( builder = SpellBuilder.new ).content_for { `Abracadabra!` }
+      ( builder = spell_builder.new ).content_for { `Abracadabra!` }
 
       expect(builder._tags).to be_empty
     end
 
     it 'escapes text' do
-      effect = SpellBuilder.new.content_for('<span>Abracadabra!</span>')
+      effect = spell_builder.new.content_for('<span>Abracadabra!</span>')
 
       expect(effect.first.to_str)
         .to eql '&lt;span&gt;Abracadabra!&lt;/span&gt;'
     end
 
     it 'does not escape block' do
-      effect = SpellBuilder.new.content_for { span 'Abracadabra!' }
+      effect = spell_builder.new.content_for { span 'Abracadabra!' }
 
       expect(effect.first.to_str).to eql '<span>Abracadabra!</span>'
     end

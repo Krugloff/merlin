@@ -1,9 +1,9 @@
 require_relative '../helper'
 
 describe 'Tags' do
-  SpellBuilder = Merlin::Builders::HtmlSpellBuilder
-  VOID_TAG     = Merlin::Spellbooks::HtmlSpellbook::VoidTag
-  NORMAL_TAG   = Merlin::Spellbooks::HtmlSpellbook::NormalTag
+  let(:spell_builder) { Merlin::Builders::HtmlSpellBuilder }
+  let(:void_tag) { Merlin::Spellbooks::HtmlSpellbook::VoidTag }
+  let(:normal_tag) { Merlin::Spellbooks::HtmlSpellbook::NormalTag }
 
   describe 'Normal Tags' do
     it 'renders' do
@@ -78,8 +78,8 @@ describe 'Tags' do
   end
 
   describe 'Helpers' do
-    let(:tag) { VOID_TAG.new :i }
-    let(:content_tag) { NORMAL_TAG.new(SpellBuilder.new, :a) }
+    let(:tag) { void_tag.new :i }
+    let(:content_tag) { normal_tag.new(spell_builder.new, :a) }
 
     describe '.klass' do
       it 'renders class attribute' do

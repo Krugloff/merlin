@@ -1,24 +1,24 @@
 require_relative 'helper'
 
 describe Merlin::HtmlSpell do
-  # Casting
-  def self.pretty(html)
-    html.gsub( /^ {4,4}/, '' ).gsub( /\n\n/, "\n  \n" )
+
+  pretty = -> (html) { html.gsub( /^ {6,6}/, '' ).gsub( /\n\n/, "\n  \n" ) }
+
+  let(:html) do
+    pretty.call <<-HTML
+      <!DOCTYPE html>
+      <html>
+        <head>
+          <link rel='stylesheet' href='style.css'>
+          <script src='jquery.js'></script>
+        </head>
+
+        <body id='frontpage'>
+          <h1 class='main'>Hello World</h1>
+        </body>
+      </html>
+    HTML
   end
-
-  HTML = pretty <<-HTML
-    <!DOCTYPE html>
-    <html>
-      <head>
-        <link rel='stylesheet' href='style.css'>
-        <script src='jquery.js'></script>
-      </head>
-
-      <body id='frontpage'>
-        <h1 class='main'>Hello World</h1>
-      </body>
-    </html>
-  HTML
 
   context 'when template' do
     it 'renders text' do
@@ -36,7 +36,7 @@ describe Merlin::HtmlSpell do
         end
       TEMPLATE
 
-      expect(spell.cast).to eql HTML
+      expect(spell.cast).to eql html
     end
 
     it 'renders block' do
@@ -54,7 +54,7 @@ describe Merlin::HtmlSpell do
         end
       end
 
-      expect(spell.cast).to eql HTML
+      expect(spell.cast).to eql html
     end
   end
 

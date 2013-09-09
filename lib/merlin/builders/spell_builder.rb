@@ -19,9 +19,8 @@ module Merlin module Builders class SpellBuilder
   alias :` :text
 
   # Delegate method to context object.
-  def method_missing(name, *args, &blk)
-    @_context.respond_to?(name, true)   ?
-      @_context.send(name, *args, &blk) :
-      super
+  def method_missing(name, *args, &block)
+    super unless @_context.respond_to?(name, true)
+    @_context.send name, *args, &block
   end
 end end end

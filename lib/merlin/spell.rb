@@ -1,46 +1,61 @@
-module Merlin
-  class Spell
-    def initialize(context_or_template = nil, **assigns, &template)
-      @context = context_or_template unless context_or_template.is_a? String
-      @assigns = assigns
-      @template = template || context_or_template
-      @builder = Builders::SpellBuilder.new @context
+module Merlin class Spell
+  # For Rails.
+  #? Add template.locals
+  def self.call(template)
+    <<-RENDER
+    spell = #{self}.new( self, { } ) do
+      #{template.source}
     end
 
-    def cast
-      _initialize_vars
-      _render_template
+    class << self
+      attr_accessor :merlin
     end
 
-    private
-      def _initialize_vars
-        if @context
-          @context.instance_variables.each do |var|
-            @builder.instance_variable_set var,
-              @context.instance_variable_get(var)
-          end
-        end
+    self.merlin = spell.builder
 
-        @assigns.each do |key, value|
-          @builder.instance_variable_set(:"@#{key}", value)
-        end
-      end
-
-      def _render_template
-        case @template
-        when String
-          @builder.instance_eval @template, __FILE__, __LINE__
-        when Proc
-          @builder.instance_exec &@template
-        end
-        @builder.to_str
-      end
+    spell.cast
+    RENDER
   end
-end
 
-# В зависимости от настроек должен загружаться тот или иной Builder (с использованием необходимого модуля).
+  attr_accessor :builder
 
-# Merlin.spells = HtmlSpell
-# ActV....regis :spell, HtmlSpell.new ?
+  def initialize(context_or_template = nil, *args, **assigns, &template)
+    @context = context_or_template unless context_or_template.is_a? String
+    @args = args
+    @assigns = assigns
+    @template = template || context_or_template
+    @builder = Builders::SpellBuilder.new @context
+  end
+
+  def cast
+    _initialize_vars
+    _render_template
+  end
+
+  private
+    def _initialize_vars
+      if @context
+        @context.instance_variables.each do |var|
+          @builder.instance_variable_set var,
+            @context.instance_variable_get(var)
+        end
+      end
+
+      @assigns.each do |key, value|
+        @builder.instance_variable_set(:"@#{key}", value)
+      end
+    end
+
+    #? Add test for args.
+    def _render_template
+      case @template
+      when String
+        @builder.instance_eval @template, __FILE__, __LINE__
+      when Proc
+        @builder.instance_exec *@args, &@template
+      end
+      @builder.to_str
+    end
+end end
 
 # bin/ spellcast [-spell=HtmlSpell (-r)equire] <file> || text

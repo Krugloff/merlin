@@ -6,7 +6,11 @@ Gem::Specification.new do |spec|
   spec.summary       = 'An HTML templating engine which uses Ruby syntax.'
   spec.description   = 'With Merlin you may generate HTML using plain Ruby.'
 
-  spec.add_development_dependency 'rspec', '>= 2.11.0'
+  spec.add_development_dependency 'rspec',      '>= 2.11.0'
+
+  spec.add_development_dependency 'rails',        '>= 3.2.13'
+  spec.add_development_dependency 'actionpack',   '>= 3.2.13'
+  spec.add_development_dependency 'activemodel',  '>= 3.2.13'
 
   spec.files         = Dir['{lib,test,bin}/**/*', '[A-Z]*']
   spec.executables   = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }

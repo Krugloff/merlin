@@ -1,0 +1,11 @@
+doctype!
+html do
+  head do
+    link rel: 'stylesheet', href: 'style.css'
+    script src: 'jquery.js'
+  end
+
+  body :id => :frontpage do
+    h1 'Hello World', :class => :main
+  end
+end

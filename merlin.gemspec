@@ -2,7 +2,7 @@ Gem::Specification.new do |spec|
   spec.required_ruby_version = '> 2.0.0'
 
   spec.name          = 'merlin'
-  spec.version       = '0.0.1'
+  spec.version       = '0.1.0'
   spec.summary       = 'An HTML templating engine which uses Ruby syntax.'
   spec.description   = 'With Merlin you may generate HTML using plain Ruby.'
 

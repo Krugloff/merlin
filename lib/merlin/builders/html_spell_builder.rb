@@ -21,7 +21,7 @@ module Merlin module Builders class HtmlSpellBuilder < SpellBuilder
   alias :` :text
 
   def text!(content)
-    _tags << PlainText.new(content)
+    _tags << PlainText.new(content) if content
   end
 
   class PlainText

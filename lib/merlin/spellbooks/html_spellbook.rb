@@ -7,7 +7,7 @@ module Merlin module Spellbooks module HtmlSpellbook
 
   NORMAL_TAGS.each do |tag|
     define_method tag do |content = nil, **attributes, &template|
-      content = content_for content, &template
+      content = tags_for content, &template
       # Hack for return tag.
       _tags[_tags.size] = NormalTag.new(self, tag, attributes, content)
     end
@@ -45,7 +45,7 @@ module Merlin module Spellbooks module HtmlSpellbook
 
       _merge attributes
 
-      @content.concat @builder.content_for(content, &template) \
+      @content.concat @builder.tags_for(content, &template) \
         if @builder
 
       self

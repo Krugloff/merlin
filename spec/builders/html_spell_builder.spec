@@ -5,20 +5,20 @@ describe Merlin::Builders::HtmlSpellBuilder do
 
   context 'when render content' do
     it 'does not save tags' do
-      ( builder = spell_builder.new ).content_for { `Abracadabra!` }
+      ( builder = spell_builder.new ).tags_for { `Abracadabra!` }
 
       expect(builder._tags).to be_empty
     end
 
     it 'escapes text' do
-      effect = spell_builder.new.content_for('<span>Abracadabra!</span>')
+      effect = spell_builder.new.tags_for('<span>Abracadabra!</span>')
 
       expect(effect.first.to_str)
         .to eql '&lt;span&gt;Abracadabra!&lt;/span&gt;'
     end
 
     it 'does not escape block' do
-      effect = spell_builder.new.content_for { span 'Abracadabra!' }
+      effect = spell_builder.new.tags_for { span 'Abracadabra!' }
 
       expect(effect.first.to_str).to eql '<span>Abracadabra!</span>'
     end

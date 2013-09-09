@@ -35,12 +35,13 @@ module Merlin module Builders class HtmlSpellBuilder < SpellBuilder
   end
 
   # Save tags once.
-  def content_for(content = nil, &template)
+  #! Test for args.
+  def tags_for(content = nil, *args, &template)
     begin
       current_tags = self._tags
       self._tags = []
       text content
-      instance_exec &template if block_given?
+      instance_exec *args, &template if block_given?
       self._tags
     ensure
       self._tags = current_tags
